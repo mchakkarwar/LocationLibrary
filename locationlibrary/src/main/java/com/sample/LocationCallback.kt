@@ -1,7 +1,7 @@
-package com.example
+package com.sample
 
 interface LocationCallbacks {
-    fun receiveLocation()
+    fun onLocationReceived(location: UsersLocation)
     fun onAccessLocationGranted()
     fun onAccessLocationDenied()
     fun onLocationSettingEnabled()

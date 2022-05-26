@@ -4,21 +4,21 @@ import android.app.Activity
 import android.content.Context
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import com.example.LocationCallbacks
-import com.example.locationlibrary.LocationClient.Companion.REQUEST_CHECK_SETTINGS
+import com.sample.UsersLocation
+import com.sample.LocationCallbacks
+import com.sample.locationlibrary.LocationClient.Companion.REQUEST_CHECK_SETTINGS
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.Task
-import kotlin.coroutines.suspendCoroutine
+import com.sample.locationlibrary.LocationClient
+import java.util.Date
 
 fun isLocationPermissionEnabled(context: Context): Boolean {
     return !(ActivityCompat.checkSelfPermission(
@@ -79,7 +79,7 @@ fun showLocationSettingDialog(
     }
     task.addOnFailureListener { exception ->
         if (exception is ResolvableApiException) {
-            // Location settings are not satisfied, but this can be fixed
+            // UsersLocation settings are not satisfied, but this can be fixed
             // by showing the user a dialog.
             try {
                 // Show the dialog by calling startResolutionForResult(),
@@ -96,19 +96,29 @@ fun showLocationSettingDialog(
 }
 
 @SuppressLint("MissingPermission")
-fun getCurrentLocation(context: Context, locationCallbacks: LocationCallbacks) {
+fun getCurrentLocation(
+    context: Context, locationCallbacks: LocationCallbacks, interval: Long = 10000,
+    fastestInterval: Long = 5000,
+    @LocationClient.Companion.LocationType locationType: Int = LocationClient.HIGH_ACCURACY
+) {
     val cts = CancellationTokenSource()
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
     if (isLocationPermissionEnabled(context)) {
         showLocationSettingDialog(
             context = context,
-            locationSettingsRequest = createLocationSettingRequest(createLocationRequest()),
+            locationSettingsRequest = createLocationSettingRequest(
+                createLocationRequest(
+                    interval = interval,
+                    fastestInterval = fastestInterval,
+                    priority = locationType
+                )
+            ),
             userEnabledLocationSetting = {
                 fusedLocationClient.getCurrentLocation(
                     LocationRequest.PRIORITY_HIGH_ACCURACY,
                     cts.token
                 ).addOnSuccessListener { currentLocation ->
-                    locationCallbacks.receiveLocation()
+                    locationCallbacks.onLocationReceived(currentLocation.toLocation())
                     Toast.makeText(context, "$currentLocation", Toast.LENGTH_SHORT)
                         .show()
                 }.addOnFailureListener { e ->
@@ -125,3 +135,30 @@ fun getCurrentLocation(context: Context, locationCallbacks: LocationCallbacks) {
             permissionNotGrantedCallback = { locationCallbacks.onAccessLocationDenied() })
     }
 }
+
+fun Location.toLocation() = UsersLocation(
+    latitude,
+    longitude,
+    elapsedRealtimeNanos,
+    Date(time),
+    speed,
+    bearing,
+    altitude,
+    accuracy,
+    provider,
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        bearingAccuracyDegrees
+    } else {
+        null
+    },
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        speedAccuracyMetersPerSecond
+    } else {
+        null
+    },
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        verticalAccuracyMeters
+    } else {
+        null
+    }
+)

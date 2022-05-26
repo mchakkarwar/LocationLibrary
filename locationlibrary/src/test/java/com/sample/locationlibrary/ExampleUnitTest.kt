@@ -1,4 +1,4 @@
-package com.example.locationlibrary
+package com.sample.locationlibrary
 
 import org.junit.Test
 
