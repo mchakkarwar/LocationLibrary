@@ -1,4 +1,4 @@
-package com.sample
+package com.mrocks
 
 interface LocationCallbacks {
     fun onLocationReceived(location: UsersLocation)

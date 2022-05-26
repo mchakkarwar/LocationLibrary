@@ -10,14 +10,14 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import com.sample.UsersLocation
-import com.sample.LocationCallbacks
-import com.sample.locationlibrary.LocationClient.Companion.REQUEST_CHECK_SETTINGS
+import com.mrocks.UsersLocation
+import com.mrocks.LocationCallbacks
+import com.mrocks.locationlibrary.LocationClient.Companion.REQUEST_CHECK_SETTINGS
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.Task
-import com.sample.locationlibrary.LocationClient
+import com.mrocks.locationlibrary.LocationClient
 import java.util.Date
 
 fun isLocationPermissionEnabled(context: Context): Boolean {

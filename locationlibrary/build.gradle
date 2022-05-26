@@ -35,7 +35,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = "com.example.locationlibrary"
+                groupId = "com.mrocks.locationlibrary"
                 artifactId = "location-library"
                 version = "1.0"
             }

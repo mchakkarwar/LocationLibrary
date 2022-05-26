@@ -3,8 +3,9 @@ package com.sample.locationlibrary
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.sample.LocationCallbacks
-import com.sample.UsersLocation
+import com.mrocks.LocationCallbacks
+import com.mrocks.UsersLocation
+import com.mrocks.locationlibrary.LocationClient
 
 class MainActivity : AppCompatActivity(), LocationCallbacks {
     override fun onCreate(savedInstanceState: Bundle?) {

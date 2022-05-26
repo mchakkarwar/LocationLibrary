@@ -1,4 +1,4 @@
-package com.sample
+package com.mrocks
 
 import java.util.Date
 

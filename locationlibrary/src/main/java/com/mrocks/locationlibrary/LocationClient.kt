@@ -1,18 +1,17 @@
-package com.sample.locationlibrary
+package com.mrocks.locationlibrary
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Looper
 import androidx.annotation.IntDef
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.sample.LocationCallbacks
+import com.mrocks.LocationCallbacks
 import createLocationRequest
 import createLocationSettingRequest
 import isLocationPermissionEnabled
