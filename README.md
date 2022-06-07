@@ -22,10 +22,15 @@ If you want to fetch user's location only on request, below snippet of code will
             locationCallbacks = this,
             context = this,
             interval = 100,
-            fastestInterval = 100
+            fastestInterval = 100,
+            locationType = HIGH_ACCURACY
         )
 ```
-
+Parameters of Location client are described as below;
+locationCallbacks : This is instance of callback where location is received
+locationType: You can receive locations that are more/less accurate, and faster/slower than requested.
+Different values for this attribute: HIGH_ACCURACY, BALANCED_POWER_ACCURACY, LOW_POWER, NO_POWER
+Default value is HIGH_ACCURACY. If have to use BALANCED_POWER_ACCURACY, you can specify fastestInterval, it will receive location triggered by other applications but power blame will be assigned on value of fastest interval. 
 Add LocationClient as lifecycle observer
 ```
 lifecycle.addObserver(locationClient)
