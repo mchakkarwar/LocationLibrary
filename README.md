@@ -1,7 +1,7 @@
 # LocationLibrary
 >LocationAPI helps to fetch location of device in your application. Location API comes with android play services.
 This is Android library to track users location. 
-I have created library that will help you to fetch users location by implement listener that will fetch users location after an specified interval.
+I have created library that will help you to fetch users location by implementing listener that will fetch users location after an specified interval.
 This library deals with handling of location permission and enabling GPS setting, you don't need to worry about it.
 
 If you want to fetch user's location only on request, below snippet of code will help you;
